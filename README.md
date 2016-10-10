@@ -8,6 +8,8 @@ Google BigQuery is a fast, economical and fully managed data warehouse for large
 
 3. Here you can find BigQuery UI console: https://bigquery.cloud.google.com/welcome
 
-4. In this git reposiroty you can find some tooltip and useful (i guess) classes
+4. In this git repository you can find some tooltip and useful (i guess) classes
+
+5. If you want to know more about BQ, you can take a look at my slides: http://www.slideshare.net/aurelievache/dans-les-coulisses-de-google-bigquery?qid=d0fe2426-ecf9-411e-a6f7-a63351490934&v=&b=&from_search=1
 
 Enjoy BQ!
