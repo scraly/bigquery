@@ -1,0 +1,35 @@
+Github met a disposition ses données publiquement sur BigQuery, nous allons donc en profiter pour exécuter quelques requêtes
+
+github_timeline > Details btn
+Comme vous pouvez le voir, les requetes que l’on va faire concerne une table qui fait plus de 3 Go
+
+1. SELECT count(*) FROM [publicdata:samples.github_timeline]
+--> nb d'enregistrement : + de 6 millions de lignes
+
+2. Sur ces millions de ligne, je veux récupérer la liste de ttes les repository qui ont plus de 50 bugs/issues d’ouvertes
+SELECT repository_url FROM [publicdata:samples.github_timeline] where repository_open_issues > 50
+
+3. Imaginons maintenant que l’on souhaite un top 10 des repository github ayant le + de fork
+Donc on fait un group by sur plus de 6 millions de ligne et on obtient le resultat en qq secondes
+
+SELECT repository_url, MAX(repository_forks) as max_forks FROM [publicdata:samples.github_timeline] GROUP EACH BY repository_url ORDER BY max_forks DESC LIMIT 10
+
+4. Et enfin, imaginons que l’on souhaite connaitre le top 100 des repositories Github les + actifs concernant le langage Java :
+
+SELECT repository_name, count(repository_name) as pushes, repository_description, repository_url
+    FROM [publicdata:samples.github_timeline]
+    WHERE type="PushEvent"
+        AND repository_language="Java"
+        AND PARSE_UTC_USEC(created_at) >= PARSE_UTC_USEC('2012-04-01 00:00:00')
+    GROUP BY repository_name, repository_description, repository_url
+    ORDER BY pushes DESC
+    LIMIT 100
+
+J’ai une petite question pour vous. A votre avis, combien de disques en parallèle sont sollicités par Google lorsqu’une requête est exécutée ?
+-> Entre 1500 et 2000 disques selon Google.
+
+5. table+grosse 100 milliard de linges : logs de wikimedia
+combien d'accès d'images dessus, la langue ...
+qq secondes avec que sur une machine ça aurait pris 24 heures
+
+
