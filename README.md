@@ -18,11 +18,11 @@ Google BigQuery is a fast, economical and fully managed data warehouse for large
 
 ### Adding a column to a table
 
-bq --format=prettyjson show yourdataset.yourtable > newschema.json
+```bq --format=prettyjson show yourdataset.yourtable > newschema.json```
 
 Edit table.json and remove everything except the inside of "fields" (e.g. keep the [ { "name": "x" ... }, ... ]). Then add your new field to the schema. Then run, for each table: 
 
-bq update <dataset>.<tablename> newschema.json
+```bq update <dataset>.<tablename> newschema.json```
 
 You can add --apilog=apilog.txt to the beginning of the command line which will show exactly what is sent / returned from the bigquery server.
 
